@@ -1,0 +1,6 @@
+doc/
+mode/
+test*.py
+!test_4.py
+output.txt
+main_func*.py
