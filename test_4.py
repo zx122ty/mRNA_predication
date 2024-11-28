@@ -51,7 +51,7 @@ def load_data(datadir):
     validfile = h5py.File(f'{datadir}/valid.h5', 'r')
     testfile = h5py.File(f'{datadir}/test.h5', 'r')
 
-  # 合并训练集和验证集
+  # combine data
     X_trainhalflife = torch.from_numpy(np.concatenate((trainfile['data'][:], validfile['data'][:]))).float()
     X_trainpromoter = torch.from_numpy(np.concatenate((trainfile['promoter'][:], validfile['promoter'][:]))).float()
     y_train = torch.from_numpy(np.concatenate((trainfile['label'][:], validfile['label'][:]))).float().unsqueeze(1)
@@ -282,7 +282,7 @@ def main(datadir):
     print('Best hyperparameters: ', study.best_params)
     save_best_params(study, filename='best_params.json')
 
-    # 计算训练时间
+    # caculate time
     training_time =( time.time() - start_time)/3600
     print(f'Training time: {training_time:.2f} hours')
 
@@ -304,7 +304,7 @@ def main(datadir):
     test_dataset = GeneDataset(X_testhalflife, X_testpromoter, y_test)
     test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
     predictions, actuals, avg_test_loss = evaluate_model(model, test_loader)
-    # 计算评估时间
+    # caculate time
     evaluation_time = (time.time() - model_load_start_time)/3600
     print(f'Evaluation time: {evaluation_time:.2f} hours')
 
